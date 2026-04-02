@@ -1,0 +1,254 @@
+// 20251023 edited final
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define GL_SILENCE_DEPRECATION
+#include "Include/FreeGLUT/freeglut.h"
+
+#define WORLD_AXES 1
+
+#define Red   0
+#define Green 1
+#define Blue  2
+
+#define SIZE_1 1
+#define SIZE_2 2
+#define SIZE_3 3
+
+#define MENU_EXIT 99
+
+#define SOLID 10
+#define WIRE  11
+
+GLuint window;
+ //寬高比 比例
+int width = 512, height = 512;
+float aspect;
+
+float teapot_size = 1.0f;
+int teapot_type = WIRE;   // 預設是線框
+float rotateAngle = 0.0f;
+float rotateSpeed = 30.0f;
+int timer_interval = 16;
+float teapot_posX = 0.0f;
+float teapot_posY = 0.0f;
+int myColor = Red;
+
+static float backgroundGray = 0.2f;
+static float oldbackGray = 0.2f;
+static int clickPt_x = 0;
+
+
+float clamp(float x, float min, float max) {
+    if (x < min) return min;
+    if (x > max) return max;
+    return x;
+}
+//如果滑太多，backgroundGray 可能變成負數或超過 1
+//OpenGL 的 glClearColor() 只接受 0.0～1.0 範圍的顏色值
+//超出範圍會造成螢幕顏色錯亂或無效
+
+
+void display(void) {
+
+    glClearColor(backgroundGray, backgroundGray, backgroundGray,1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();  // 重設模型矩陣
+
+    // 攝影機位置：眼睛在(0,2,5)，看向(0,0,0)
+    gluLookAt(3.0, 3.0, 3.0,
+              0.0, 0.0, 0.0,
+              0.0, 1.0, 0.0);
+
+    // 畫坐標軸
+    glCallList(WORLD_AXES);// 畫固定的軸線
+
+    glPushMatrix(); // 只轉接下來的茶壺
+
+    // 平移與旋轉
+    glTranslatef(teapot_posX, teapot_posY, 0.0f);  // 移動到畫面中
+    glRotatef(rotateAngle, 0.0f, 1.0f, 0.0f);       // Y軸旋轉
+
+    // 設定顏色
+    if (myColor == Red)   glColor3b(125, 0, 0);
+    if (myColor == Green) glColor3b(0, 125, 0);
+    if (myColor == Blue)  glColor3b(0, 0, 125);
+
+    if (teapot_type == WIRE) glutWireTeapot(teapot_size);
+    else                     glutSolidTeapot(teapot_size);
+
+
+    glPopMatrix();// 還原軸線座標
+    glutSwapBuffers();
+}
+
+void My_Keyboard(unsigned char key, int x, int y)
+{
+    switch (key)
+    {
+    case 'r':myColor = Red;break;
+    case 'g':myColor = Green;break;
+    case 'b':myColor = Blue;break;
+    case 'a': teapot_posX -= 0.05f;break;// 向左移
+    case 'd': teapot_posX += 0.05f;break;// 向右移
+    case 'w': teapot_posY += 0.05f;break;// 向上移
+    case 's': teapot_posY -= 0.05f;break;// 向下移
+    case 'q': rotateSpeed += 10.0f;break;// 旋轉
+    case 'e': rotateSpeed -= 10.0f;break;// 旋轉
+
+    case 27: exit(0);// ESC 離開
+    }
+    glutPostRedisplay(); // 要求重繪
+}
+
+
+// -------- 特殊鍵 (↑↓←→) --------
+void My_SpecialKeys(int key, int x, int y) {
+    switch (key) {
+        case GLUT_KEY_UP: teapot_posY += 0.05f; break;
+        case GLUT_KEY_DOWN: teapot_posY -= 0.05f; break;
+        case GLUT_KEY_LEFT: teapot_posX -= 0.05f; break;
+        case GLUT_KEY_RIGHT: teapot_posX += 0.05f; break;
+        case GLUT_KEY_F1: myColor = Red; break;
+        case GLUT_KEY_F2: myColor = Green; break;
+        case GLUT_KEY_F3: myColor = Blue; break;
+    }
+    glutPostRedisplay();
+}
+
+void My_Reshape(int w, int h) {
+    aspect = w * 1.0f / h;
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glViewport(0, 0, w, h);
+
+    gluPerspective(60.0f, aspect, 0.1f, 10.0f);
+}
+
+
+void My_Timer(int val) {
+    rotateAngle += rotateSpeed * timer_interval * 0.001;
+    glutPostRedisplay();
+    glutTimerFunc(timer_interval, My_Timer, val);
+}
+
+
+void My_Menu(int id){
+    switch (id){
+        case SIZE_1:
+            teapot_size = 1.0f;
+            break;
+        case SIZE_2:
+            teapot_size = 1.5f;
+            break;
+        case SIZE_3:
+            teapot_size = 2.0f;
+            break;
+        case SOLID:
+            teapot_type = SOLID;
+            break;
+        case WIRE:
+            teapot_type = WIRE;
+            break;
+        case MENU_EXIT:
+            exit(0);
+    }
+    
+    glutPostRedisplay();
+
+}
+
+
+void My_Mouse(int button, int state, int x, int y){
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+        oldbackGray = backgroundGray;
+        clickPt_x = x;
+        
+    }
+}
+
+void Mouse_Moving(int x, int y){
+    backgroundGray = (x - clickPt_x) * 0.005f + oldbackGray;
+
+    backgroundGray = clamp(backgroundGray, 0.0f, 1.0f);
+
+    glutPostRedisplay();
+
+}
+
+//初始設定函數
+void init(void) {
+    glEnable(GL_DEPTH_TEST); //啟動深度測試功能
+    glClearColor(0.2, 0.2, 0.2, 0.0); //設定清除畫面時所使用的顏色
+
+    //  定義坐標軸
+    glNewList(WORLD_AXES, GL_COMPILE);
+    glBegin(GL_LINES);
+    aspect = (GLfloat)width / (GLfloat)height;
+
+        glColor3f(1.0,0.0,0.0);
+        glVertex3f(0.0,0.0,0.0);
+        glVertex3f(aspect * 1.5,0.0,0.0);
+
+        glColor3f(0.0,1.0,0.0);
+        glVertex3f(0.0,0.0,0.0);
+        glVertex3f(0.0,aspect * 1.5,0.0);
+
+        glColor3f(0.0,0.0,1.0);
+        glVertex3f(0.0,0.0,0.0);
+        glVertex3f(0.0,0.0,aspect * 1.5);
+
+    glEnd();
+    glEndList();
+}
+
+// -------- 主程式 --------
+int main(int argc, char* argv[]) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+    glutInitWindowSize(width ,height); //視窗大小
+    glutInitWindowPosition(50,50); //視窗初始位置
+
+    window = glutCreateWindow("U11316014"); //建立視窗
+
+    glClearColor(backgroundGray, backgroundGray, backgroundGray, 0.1f);
+    init(); //只會被呼叫一次
+
+    glutDisplayFunc(display); //註冊顯示事件的處理函數
+    glutReshapeFunc(My_Reshape); //註冊視窗重塑事件的處理函數
+    glutKeyboardFunc(My_Keyboard);
+    glutSpecialFunc(My_SpecialKeys);
+    glutMouseFunc(My_Mouse);
+    glutMotionFunc(Mouse_Moving);
+    glutTimerFunc(timer_interval, My_Timer, 0);
+    glutPostRedisplay();
+
+
+    // 先建立子選單
+    int subMenu1 = glutCreateMenu(My_Menu);
+    glutAddMenuEntry("1.0", SIZE_1);
+    glutAddMenuEntry("1.5", SIZE_2);
+    glutAddMenuEntry("2.0", SIZE_3);
+
+
+    int subMenu2 = glutCreateMenu(My_Menu);
+    glutAddMenuEntry("wire", WIRE);
+    glutAddMenuEntry("solid", SOLID);
+
+    // 再建立主選單
+    int mainMenu = glutCreateMenu(My_Menu);
+    glutAddSubMenu("Teapot size", subMenu1);
+    glutAddSubMenu("Teapot type", subMenu2);
+    glutAddMenuEntry("Exit", MENU_EXIT);
+
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+    glutMainLoop();
+    return 0;
+}
+
+//輸出前要先打
+//gcc ex1.c -o ex1 -IC:\Users\user\Desktop\E1\Include -LC:\Users\user\Desktop\E1\Lib -lfreeglut -lopengl32 -lglu32
+// ./ex1.exe
