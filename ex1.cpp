@@ -1,19 +1,17 @@
 /*  
-  ¾Ç¸¹¡GU11316014
-  ©m¦W¡G³¯¯\Ş·
-  §@·~¤º®e»¡©ú¡G
-    1.¨Ï¥Î OpenGL + GLUI «Ø¥ß 3D ª«¥ó¾Ş§@¤¶­±
-      ¤ä´© Teapot / ColorCube / Model ¤TºØª«¥ó¤Á´«Åã¥Ü
-      ¨Ã¥i±q¥~³¡ .tri ÀÉÅª¨ú¼Ò«¬¸ê®Æ¡]³»ÂI¡Bªk¦V¶q¡B¤T¨¤­±¡^
-      ¸ü¤J«á¦Û°Ê¸m¤¤»Pµ¥¤ñ¨ÒÁY©ñ¡A«Ø¥ß display list ¶i¦æ´è¬V
-    2.ª«¥óTranslation¡BRotation¡BScaling±±¨î ¨Ã¤ä´© Uniform Scaling
-    3.¤ä´© Orthographic / Perspective ¨âºØ§ë¼vµø¨¤¤Á´«¡A¨Ã¥i§Y®É§ó·sµe­±
-    4.¤T·ø¥ú·½ Light0 / Light1 / Light2¡A¥i¦U¦Û¿W¥ß¶}Ãö¡A¨Ã¥i½Õ¾ã Diffuse / Specular ÃC¦â°Ñ¼Æ
-    5.¨C·ø¥ú·½¤ä´© Directional Light »P Spot Light ¨âºØ¼Ò¦¡¤Á´«
-      Spot Light ¥i³z¹L GLUI Rotation ±ÛÂà±±¨î·Ó®g¤è¦V¡A¥B¥ú·½¦ì¸m©T©w©ó¥@¬É®y¼Ğ
-    6.§÷½è¨t²Î¡]Gold / Pewter / Silver / Copper / Chrome¡^ ¨Ã¥i½Õ¾ã Shininess °Ñ¼Æ¡A¦P®É¤ä´© Emission µo¥ú®ÄªG
-    7.Teapot / ColorCube / Model ¬Ò¯à¥¿½T¨ü¨ì¥ú·Ó¼vÅT
-    8.¥kÁä¿ï³æ²Î¤@´£¨Ñ Object Size »P Object Type¡]Wire / Solid / Smooth¡^³]©w¡A¥B©Ò¦³ª«¥ó¬Ò¥i¨Ï¥Î¥kÁä¿ï³æ§Ö³t½Õ¾ã
+  å…§å®¹èªªæ˜ï¼š
+    1.ä½¿ç”¨ OpenGL + GLUI å»ºç«‹ 3D ç‰©ä»¶æ“ä½œä»‹é¢
+      æ”¯æ´ Teapot / ColorCube / Model ä¸‰ç¨®ç‰©ä»¶åˆ‡æ›é¡¯ç¤º
+      ä¸¦å¯å¾å¤–éƒ¨ .tri æª”è®€å–æ¨¡å‹è³‡æ–™ï¼ˆé ‚é»ã€æ³•å‘é‡ã€ä¸‰è§’é¢ï¼‰
+      è¼‰å…¥å¾Œè‡ªå‹•ç½®ä¸­èˆ‡ç­‰æ¯”ä¾‹ç¸®æ”¾ï¼Œå»ºç«‹ display list é€²è¡Œæ¸²æŸ“
+    2.ç‰©ä»¶Translationã€Rotationã€Scalingæ§åˆ¶ ä¸¦æ”¯æ´ Uniform Scaling
+    3.æ”¯æ´ Orthographic / Perspective å…©ç¨®æŠ•å½±è¦–è§’åˆ‡æ›ï¼Œä¸¦å¯å³æ™‚æ›´æ–°ç•«é¢
+    4.ä¸‰ç›å…‰æº Light0 / Light1 / Light2ï¼Œå¯å„è‡ªç¨ç«‹é–‹é—œï¼Œä¸¦å¯èª¿æ•´ Diffuse / Specular é¡è‰²åƒæ•¸
+    5.æ¯ç›å…‰æºæ”¯æ´ Directional Light èˆ‡ Spot Light å…©ç¨®æ¨¡å¼åˆ‡æ›
+      Spot Light å¯é€é GLUI Rotation æ—‹è½‰æ§åˆ¶ç…§å°„æ–¹å‘ï¼Œä¸”å…‰æºä½ç½®å›ºå®šæ–¼ä¸–ç•Œåº§æ¨™
+    6.æè³ªç³»çµ±ï¼ˆGold / Pewter / Silver / Copper / Chromeï¼‰ ä¸¦å¯èª¿æ•´ Shininess åƒæ•¸ï¼ŒåŒæ™‚æ”¯æ´ Emission ç™¼å…‰æ•ˆæœ
+    7.Teapot / ColorCube / Model çš†èƒ½æ­£ç¢ºå—åˆ°å…‰ç…§å½±éŸ¿
+    8.å³éµé¸å–®çµ±ä¸€æä¾› Object Size èˆ‡ Object Typeï¼ˆWire / Solid / Smoothï¼‰è¨­å®šï¼Œä¸”æ‰€æœ‰ç‰©ä»¶çš†å¯ä½¿ç”¨å³éµé¸å–®å¿«é€Ÿèª¿æ•´
 */
 #include <windows.h>
 #include <commdlg.h>
@@ -36,7 +34,7 @@
 #define LOCAL_ 2
 
 static char gModelPath[MAX_PATH] = "";
-static int  lastObjType = 0;   // ¥Î¨Ó¨ú®ø¿ïÀÉ®É¦^´_¤W¤@­Óª«¥ó
+static int  lastObjType = 0;   // ç”¨ä¾†å–æ¶ˆé¸æª”æ™‚å›å¾©ä¸Šä¸€å€‹ç‰©ä»¶
 static GLUI_StaticText* modelPathText = nullptr;
 
 static inline float clampf(float v, float a, float b) { return (v < a) ? a : (v > b) ? b : v; }
@@ -110,7 +108,7 @@ static bool OpenTriFileDialog(char outPath[MAX_PATH]) {
         outPath[MAX_PATH - 1] = '\0';
         return true;
     }
-    return false; // ¨Ï¥ÎªÌ«ö¨ú®ø
+    return false; // ä½¿ç”¨è€…æŒ‰å–æ¶ˆ
 }
 
 static inline void norm3(Vec3& v) {
@@ -441,7 +439,7 @@ static void rebuildModelListFromTRI() {
             const Vec3& n = gN[id];
             const Vec3& v = gV[id];
 
-            // ¡¹Àu¥ı vertex color¡A¨S¦³¤~¥Î face color¡A³Ì«á¥Õ¦â
+            // â˜…å„ªå…ˆ vertex colorï¼Œæ²’æœ‰æ‰ç”¨ face colorï¼Œæœ€å¾Œç™½è‰²
             if (gHasVertexColor && id >= 0 && id < (int)gC.size()) {
                 const Vec3& vc = gC[id];
                 glColor3f(vc.x, vc.y, vc.z);
@@ -934,7 +932,7 @@ void call_back_function(int ID) {
         break;
 
     case CB_MATERIAL:
-        // ¡¹ material Ãö¡Gemission ¤£¯à¿ï + ±j¨îÃö³¬ emission
+        // â˜… material é—œï¼šemission ä¸èƒ½é¸ + å¼·åˆ¶é—œé–‰ emission
         if (!if_material) {
             if_emission = 0;
             if (cb_emission) {
@@ -998,7 +996,7 @@ void call_back_function(int ID) {
     }
 
     case CB_EMISSION:
-        // emission checkbox ¤w¥Ñ CB_MATERIAL ±±¨î enable/disable
+        // emission checkbox å·²ç”± CB_MATERIAL æ§åˆ¶ enable/disable
         break;
 
     default:
@@ -1057,7 +1055,7 @@ void initUI() {
     cb_material = glui->add_checkbox_to_panel(material, "material", &if_material, CB_MATERIAL, call_back_function);
     cb_emission = glui->add_checkbox_to_panel(material, "emission", &if_emission, CB_EMISSION, call_back_function);
 
-    // ¡¹ªì©lª¬ºA¡Gmaterial Ãö -> emission disable
+    // â˜…åˆå§‹ç‹€æ…‹ï¼šmaterial é—œ -> emission disable
     if (!if_material) {
         if_emission = 0;
         cb_emission->set_int_val(0);
