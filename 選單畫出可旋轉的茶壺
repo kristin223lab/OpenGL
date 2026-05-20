@@ -22,12 +22,12 @@
 #define WIRE  11
 
 GLuint window;
- //¼e°ª¤ñ ¤ñ¨Ò
+ //å¯¬é«˜æ¯” æ¯”ä¾‹
 int width = 512, height = 512;
 float aspect;
 
 float teapot_size = 1.0f;
-int teapot_type = WIRE;   // ¹w³]¬O½u®Ø
+int teapot_type = WIRE;   // é è¨­æ˜¯ç·šæ¡†
 float rotateAngle = 0.0f;
 float rotateSpeed = 30.0f;
 int timer_interval = 16;
@@ -45,9 +45,9 @@ float clamp(float x, float min, float max) {
     if (x > max) return max;
     return x;
 }
-//¦pªG·Æ¤Ó¦h¡AbackgroundGray ¥i¯àÅÜ¦¨­t¼Æ©Î¶W¹L 1
-//OpenGL ªº glClearColor() ¥u±µ¨ü 0.0¡ã1.0 ½d³òªºÃC¦â­È
-//¶W¥X½d³ò·|³y¦¨¿Ã¹õÃC¦â¿ù¶Ã©ÎµL®Ä
+//å¦‚æœæ»‘å¤ªå¤šï¼ŒbackgroundGray å¯èƒ½è®Šæˆè² æ•¸æˆ–è¶…é 1
+//OpenGL çš„ glClearColor() åªæ¥å— 0.0ï½1.0 ç¯„åœçš„é¡è‰²å€¼
+//è¶…å‡ºç¯„åœæœƒé€ æˆè¢å¹•é¡è‰²éŒ¯äº‚æˆ–ç„¡æ•ˆ
 
 
 void display(void) {
@@ -55,23 +55,23 @@ void display(void) {
     glClearColor(backgroundGray, backgroundGray, backgroundGray,1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();  // ­«³]¼Ò«¬¯x°}
+    glLoadIdentity();  // é‡è¨­æ¨¡å‹çŸ©é™£
 
-    // Äá¼v¾÷¦ì¸m¡G²´·ú¦b(0,2,5)¡A¬İ¦V(0,0,0)
+    // æ”å½±æ©Ÿä½ç½®ï¼šçœ¼ç›åœ¨(0,2,5)ï¼Œçœ‹å‘(0,0,0)
     gluLookAt(3.0, 3.0, 3.0,
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0);
 
-    // µe§¤¼Ğ¶b
-    glCallList(WORLD_AXES);// µe©T©wªº¶b½u
+    // ç•«åæ¨™è»¸
+    glCallList(WORLD_AXES);// ç•«å›ºå®šçš„è»¸ç·š
 
-    glPushMatrix(); // ¥uÂà±µ¤U¨Óªº¯ù³ı
+    glPushMatrix(); // åªè½‰æ¥ä¸‹ä¾†çš„èŒ¶å£º
 
-    // ¥­²¾»P±ÛÂà
-    glTranslatef(teapot_posX, teapot_posY, 0.0f);  // ²¾°Ê¨ìµe­±¤¤
-    glRotatef(rotateAngle, 0.0f, 1.0f, 0.0f);       // Y¶b±ÛÂà
+    // å¹³ç§»èˆ‡æ—‹è½‰
+    glTranslatef(teapot_posX, teapot_posY, 0.0f);  // ç§»å‹•åˆ°ç•«é¢ä¸­
+    glRotatef(rotateAngle, 0.0f, 1.0f, 0.0f);       // Yè»¸æ—‹è½‰
 
-    // ³]©wÃC¦â
+    // è¨­å®šé¡è‰²
     if (myColor == Red)   glColor3b(125, 0, 0);
     if (myColor == Green) glColor3b(0, 125, 0);
     if (myColor == Blue)  glColor3b(0, 0, 125);
@@ -80,7 +80,7 @@ void display(void) {
     else                     glutSolidTeapot(teapot_size);
 
 
-    glPopMatrix();// ÁÙ­ì¶b½u®y¼Ğ
+    glPopMatrix();// é‚„åŸè»¸ç·šåº§æ¨™
     glutSwapBuffers();
 }
 
@@ -91,20 +91,20 @@ void My_Keyboard(unsigned char key, int x, int y)
     case 'r':myColor = Red;break;
     case 'g':myColor = Green;break;
     case 'b':myColor = Blue;break;
-    case 'a': teapot_posX -= 0.05f;break;// ¦V¥ª²¾
-    case 'd': teapot_posX += 0.05f;break;// ¦V¥k²¾
-    case 'w': teapot_posY += 0.05f;break;// ¦V¤W²¾
-    case 's': teapot_posY -= 0.05f;break;// ¦V¤U²¾
-    case 'q': rotateSpeed += 10.0f;break;// ±ÛÂà
-    case 'e': rotateSpeed -= 10.0f;break;// ±ÛÂà
+    case 'a': teapot_posX -= 0.05f;break;// å‘å·¦ç§»
+    case 'd': teapot_posX += 0.05f;break;// å‘å³ç§»
+    case 'w': teapot_posY += 0.05f;break;// å‘ä¸Šç§»
+    case 's': teapot_posY -= 0.05f;break;// å‘ä¸‹ç§»
+    case 'q': rotateSpeed += 10.0f;break;// æ—‹è½‰
+    case 'e': rotateSpeed -= 10.0f;break;// æ—‹è½‰
 
-    case 27: exit(0);// ESC Â÷¶}
+    case 27: exit(0);// ESC é›¢é–‹
     }
-    glutPostRedisplay(); // ­n¨D­«Ã¸
+    glutPostRedisplay(); // è¦æ±‚é‡ç¹ª
 }
 
 
-// -------- ¯S®íÁä (¡ô¡õ¡ö¡÷) --------
+// -------- ç‰¹æ®Šéµ (â†‘â†“â†â†’) --------
 void My_SpecialKeys(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_UP: teapot_posY += 0.05f; break;
@@ -178,12 +178,12 @@ void Mouse_Moving(int x, int y){
 
 }
 
-//ªì©l³]©w¨ç¼Æ
+//åˆå§‹è¨­å®šå‡½æ•¸
 void init(void) {
-    glEnable(GL_DEPTH_TEST); //±Ò°Ê²`«×´ú¸Õ¥\¯à
-    glClearColor(0.2, 0.2, 0.2, 0.0); //³]©w²M°£µe­±®É©Ò¨Ï¥ÎªºÃC¦â
+    glEnable(GL_DEPTH_TEST); //å•Ÿå‹•æ·±åº¦æ¸¬è©¦åŠŸèƒ½
+    glClearColor(0.2, 0.2, 0.2, 0.0); //è¨­å®šæ¸…é™¤ç•«é¢æ™‚æ‰€ä½¿ç”¨çš„é¡è‰²
 
-    //  ©w¸q§¤¼Ğ¶b
+    //  å®šç¾©åæ¨™è»¸
     glNewList(WORLD_AXES, GL_COMPILE);
     glBegin(GL_LINES);
     aspect = (GLfloat)width / (GLfloat)height;
@@ -204,20 +204,20 @@ void init(void) {
     glEndList();
 }
 
-// -------- ¥Dµ{¦¡ --------
+// -------- ä¸»ç¨‹å¼ --------
 int main(int argc, char* argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
-    glutInitWindowSize(width ,height); //µøµ¡¤j¤p
-    glutInitWindowPosition(50,50); //µøµ¡ªì©l¦ì¸m
+    glutInitWindowSize(width ,height); //è¦–çª—å¤§å°
+    glutInitWindowPosition(50,50); //è¦–çª—åˆå§‹ä½ç½®
 
-    window = glutCreateWindow("U11316014"); //«Ø¥ßµøµ¡
+    window = glutCreateWindow("U11316014"); //å»ºç«‹è¦–çª—
 
     glClearColor(backgroundGray, backgroundGray, backgroundGray, 0.1f);
-    init(); //¥u·|³Q©I¥s¤@¦¸
+    init(); //åªæœƒè¢«å‘¼å«ä¸€æ¬¡
 
-    glutDisplayFunc(display); //µù¥UÅã¥Ü¨Æ¥óªº³B²z¨ç¼Æ
-    glutReshapeFunc(My_Reshape); //µù¥Uµøµ¡­«¶ì¨Æ¥óªº³B²z¨ç¼Æ
+    glutDisplayFunc(display); //è¨»å†Šé¡¯ç¤ºäº‹ä»¶çš„è™•ç†å‡½æ•¸
+    glutReshapeFunc(My_Reshape); //è¨»å†Šè¦–çª—é‡å¡‘äº‹ä»¶çš„è™•ç†å‡½æ•¸
     glutKeyboardFunc(My_Keyboard);
     glutSpecialFunc(My_SpecialKeys);
     glutMouseFunc(My_Mouse);
@@ -226,7 +226,7 @@ int main(int argc, char* argv[]) {
     glutPostRedisplay();
 
 
-    // ¥ı«Ø¥ß¤l¿ï³æ
+    // å…ˆå»ºç«‹å­é¸å–®
     int subMenu1 = glutCreateMenu(My_Menu);
     glutAddMenuEntry("1.0", SIZE_1);
     glutAddMenuEntry("1.5", SIZE_2);
@@ -237,7 +237,7 @@ int main(int argc, char* argv[]) {
     glutAddMenuEntry("wire", WIRE);
     glutAddMenuEntry("solid", SOLID);
 
-    // ¦A«Ø¥ß¥D¿ï³æ
+    // å†å»ºç«‹ä¸»é¸å–®
     int mainMenu = glutCreateMenu(My_Menu);
     glutAddSubMenu("Teapot size", subMenu1);
     glutAddSubMenu("Teapot type", subMenu2);
@@ -249,6 +249,6 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-//¿é¥X«e­n¥ı¥´
+//è¼¸å‡ºå‰è¦å…ˆæ‰“
 //gcc ex1.c -o ex1 -IC:\Users\user\Desktop\E1\Include -LC:\Users\user\Desktop\E1\Lib -lfreeglut -lopengl32 -lglu32
 // ./ex1.exe
